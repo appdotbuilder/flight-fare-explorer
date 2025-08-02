@@ -1,9 +1,17 @@
 
+import { db } from '../db';
+import { airlinesTable } from '../db/schema';
 import { type Airline } from '../schema';
 
-export async function getAirlines(): Promise<Airline[]> {
-    // This is a placeholder declaration! Real code should be implemented here.
-    // The goal of this handler is fetching all available airlines for filter options
-    // in the flight search interface.
-    return [];
-}
+export const getAirlines = async (): Promise<Airline[]> => {
+  try {
+    const results = await db.select()
+      .from(airlinesTable)
+      .execute();
+
+    return results;
+  } catch (error) {
+    console.error('Failed to fetch airlines:', error);
+    throw error;
+  }
+};
